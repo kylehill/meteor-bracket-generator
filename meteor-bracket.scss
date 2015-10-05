@@ -1,0 +1,406 @@
+$base_font_size: 15px;
+$base_player_height: $base_font_size * 1.6;
+$base_nav_height: $base_font_size * 2.5;
+$base_float_width: $base_font_size * 2;
+$base_match_height: $base_player_height * 3;
+
+$color_gray: rgba(51, 51, 51, 1);
+$color_light_gray: rgba(91, 91, 91, 1);
+$color_player_background: rgba(204, 204, 204, .7);
+$color_winner_green: rgb(172, 225, 175);
+$color_seed_blue: rgb(69, 177, 232);
+
+$breakpoint: 768px;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $base_nav_height;
+  background: $color_gray;
+  z-index: 1;
+  border-bottom: solid 1px white;
+
+  ul {
+    list-style-type: none;
+    position: absolute;
+    left: 100px;
+  }
+
+  li {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .link-container {
+    color: white;
+    text-transform: uppercase;
+    font-size: $base_font_size - 2px;
+    line-height: $base_nav_height;
+    font-weight: bold;
+    margin-right: 50px;
+  }
+}
+
+.list {
+  margin: 0px auto;
+  width: 90%;
+  list-style-type: none;
+
+  li {
+    padding: 10px;
+    border-bottom: solid 1px $color_gray;
+  }
+}
+
+main {
+  min-height: 100vh;
+  padding-top: $base_nav_height;
+  position: relative;
+}
+
+.create-container {
+  margin: 0px auto;
+  width: 80%;
+}
+
+.create-row {
+  margin-bottom: 20px;
+}
+
+.create-instructions {
+  font-size: $base_font_size * 1.5;
+}
+
+.create-title {
+  font-size: $base_font_size * 2;
+  border: solid 1px $color_gray;
+  padding: 5px;
+  width: 100%;
+}
+
+.create-namelist {
+  padding: 5px;
+  height: 50vh;
+  width: 100%;
+  font-size: $base_font_size * 2;
+  border: solid 1px $color_gray;
+}
+
+.create-button {
+  background: rgb(9, 127, 75);
+  color: white;
+  font-size: $base_font_size * 1.5;
+  padding: 10px 20px;
+  border: solid 1px $color_light_gray;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tournament-container {
+  min-height: 100vh;
+  position: relative;
+  background: $color_light_gray;
+}
+
+.tournament {
+  background: $color_light_gray;
+  font-size: 0px;
+  width: 100%;
+}
+
+.tournament-title {
+  font-size: $base_font_size * 2;
+  text-transform: uppercase;
+  color: white;
+  padding: $base_font_size;
+  text-align: center;
+}
+
+@media (min-width: $breakpoint) {
+  .bracket-view {
+  
+    &.tournament-rounds-2 .round {
+      width: (100% / 2);
+    }
+
+    &.tournament-rounds-3 .round {
+      width: (100% / 3);
+    }
+
+    &.tournament-rounds-4 .round {
+      width: (100% / 4);
+    }
+
+    &.tournament-rounds-5 .round {
+      width: (100% / 5);
+    }
+
+    &.tournament-rounds-6 .round {
+      width: (100% / 6);
+    }
+
+    .round {
+      display: inline-block;
+      vertical-align: top;
+      position: relative;
+      margin-top: $base_player_height;
+      
+      .title {
+        font-size: $base_font_size * 1.2;
+        text-transform: uppercase;
+        font-style: italic;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        width: 100%;
+        position: absolute;
+        top: -1 * ($base_player_height);
+      }
+    }
+
+    .round-1 .match {
+      height: $base_match_height;
+    }
+    .round-2 .match {
+      height: $base_match_height * 2;
+    }
+    .round-3 .match {
+      height: $base_match_height * 4;
+    }
+    .round-4 .match {
+      height: $base_match_height * 8;
+    }
+    .round-5 .match {
+      height: $base_match_height * 16;
+    }
+    .round-6 .match {
+      height: $base_match_height * 32;
+    }
+
+    .match {
+      position: relative;
+      left: 7.5%;
+      width: 85%;
+      padding: 0;
+    }
+
+    .match-blank {
+      visibility: hidden;
+    }
+
+    .player {
+      position: absolute;
+      top: calc(50% - .75em);
+      transform: translateY(-50%);
+      width: 100%;
+      padding-left: 10px;
+      font-size: $base_font_size;
+      color: black;
+      height: $base_player_height;
+      line-height: $base_player_height;
+      background: $color_player_background;
+
+      &:last-child {
+        border-top: solid 1px black;
+        top: calc(50% + .75em);
+
+        &:after {
+          height: $base_player_height - 1px;
+        }
+      }
+
+      &:after {
+        content: attr(data-score);
+        float: right;
+        background: white;
+        width: $base_float_width;
+        padding-right: 5px;
+        text-align: right;
+        box-sizing: border-box;
+        border-left: solid 1px black;
+        height: $base_player_height;
+        line-height: $base_player_height;
+      }
+
+    }
+
+    .winner {
+      font-weight: bold;
+
+      &:after {
+        background: $color_winner_green;
+      }
+    }
+
+  }
+}
+
+@media (max-width: $breakpoint - 1) {
+
+  nav ul {
+    left: 10px;
+  }
+
+  nav .link-container {
+    margin-right: 20px;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .bracket-view {
+    .round {
+      position: relative;
+      padding: 10px;
+      
+      .title {
+        font-size: $base_font_size * 1.2;
+        text-transform: uppercase;
+        font-style: italic;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    .match {
+      width: 90%;
+      margin: 10px auto;
+      font-size: 0px;
+    }
+
+    .match-blank {
+      display: none;
+    }
+
+    .player {
+      display: inline-block;
+      vertical-align: top;
+      width: calc(50% - 2px);
+      margin-right: 2px;
+      padding-left: 10px;
+      font-size: $base_font_size;
+      color: black;
+      height: $base_player_height;
+      line-height: $base_player_height;
+      background: $color_player_background;
+
+      &:last-child {
+        padding-left: 0;
+        padding-right: 10px;
+        text-align: right;
+
+        &:after {
+          float: left;
+        }
+      }
+
+      &:after {
+        content: attr(data-score);
+        float: right;
+        background: white;
+        width: $base_float_width + 5px;
+        text-align: center;
+        box-sizing: border-box;
+        border-left: solid 1px black;
+        height: $base_player_height;
+        line-height: $base_player_height;
+      }
+    }
+
+    .winner {
+      font-weight: bold;
+
+      &:after {
+        background: $color_winner_green;
+      }
+    }
+  }
+}
+
+.matches-view {
+
+  .round {
+    position: relative;
+    padding: 10px;
+    
+    .title {
+      font-size: $base_font_size * 1.2;
+      text-transform: uppercase;
+      font-style: italic;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+    }
+  }
+
+  .match {
+    width: 60%;
+    margin: 10px auto;
+    font-size: 0px;
+  }
+
+  .match-blank {
+    display: none;
+  }
+
+  .player {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(50% - 2px);
+    margin-right: 2px;
+    padding-left: 10px;
+    font-size: $base_font_size;
+    color: black;
+    height: $base_player_height;
+    line-height: $base_player_height;
+    background: $color_player_background;
+
+    &:last-child {
+      padding-left: 0;
+      padding-right: 10px;
+      text-align: right;
+
+      &:after {
+        float: left;
+      }
+    }
+
+    &:after {
+      content: attr(data-score);
+      float: right;
+      background: white;
+      width: $base_float_width + 5px;
+      text-align: center;
+      box-sizing: border-box;
+      border-left: solid 1px black;
+      height: $base_player_height;
+      line-height: $base_player_height;
+    }
+  }
+
+  .winner {
+    font-weight: bold;
+
+    &:after {
+      background: $color_winner_green;
+    }
+  }
+
+}
